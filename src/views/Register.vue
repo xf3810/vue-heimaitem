@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   data () {
     return {
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     register () {
-      axios.post('http://localhost:3000/register', this.user).then((res) => {
+      this.axios.post('http://localhost:3000/register', this.user).then((res) => {
         const { statusCode, message } = res.data
         if (statusCode === 200) {
           this.$toast.success(message)

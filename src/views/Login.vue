@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   data () {
     return {
@@ -46,7 +46,7 @@ export default {
     //   console.log(res)
     // }
     login () {
-      axios
+      this.axios
         .post('http://localhost:3000/login', {
           username: this.username,
           password: this.password

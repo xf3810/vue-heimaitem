@@ -8,9 +8,11 @@ import 'vant/lib/index.css'
 import 'amfe-flexible'
 import HmHeader from './components/HmHeader.vue'
 import HmLogo from './components/HmLogo.vue'
+import axios from 'axios'
 
 Vue.component('hm-header', HmHeader)
 Vue.component('hm-logo', HmLogo)
+Vue.prototype.axios = axios
 
 Vue.use(Vant)
 Vue.config.productionTip = false
