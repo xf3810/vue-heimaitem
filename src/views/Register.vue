@@ -52,11 +52,20 @@ export default {
   },
   methods: {
     register () {
-      this.axios.post('http://localhost:3000/register', this.user).then((res) => {
+      this.axios.post('/register', this.user).then((res) => {
         const { statusCode, message } = res.data
         if (statusCode === 200) {
           this.$toast.success(message)
-          this.$router.push('./login')
+          // this.$router.push(`./login?username=${this.user.username}&password=${this.user.password}`)   方法1是在地址后面传递参数 在login组件里面用this.$route.query 接收
+
+          // this.$router.push({
+          //   path: './login',
+          //   query: this.user
+          // })   方法2 通过对象 传递参数 对象里面是path+地址 和query+参数 通过this.route.query接收
+          this.$router.push({
+            name: 'login',
+            params: this.user
+          }) // 方法3 通过对象传递参数 对象里面是路由的name+name值(name值在配置路由的时候和path component一起配置) 和params+参数 通过this.$route.params接收参数
         }
         if (statusCode === 401) {
           this.$toast.fail(message)

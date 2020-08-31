@@ -27,6 +27,12 @@
 <script>
 // import axios from 'axios'
 export default {
+  created () {
+    // console.log(this.$route)
+    const { username, password } = this.$route.params
+    this.password = password
+    this.username = username
+  },
   data () {
     return {
       username: '',
@@ -47,17 +53,18 @@ export default {
     // }
     login () {
       this.axios
-        .post('http://localhost:3000/login', {
+        .post('/login', {
           username: this.username,
           password: this.password
         })
         .then((res) => {
-          const { statusCode, message } = res.data
-
+          const { statusCode, message, data } = res.data
           if (statusCode === 401) {
             this.$toast.fail('登录失败')
           }
           if (statusCode === 200) {
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('userId', data.user.id)
             this.$toast.success(message)
             this.$router.push('./user')
           }
@@ -67,7 +74,8 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style lang='less' scoped>  // scoped 会给当前组件里面的元素加上 data-v-xxx的属性 设置样式的时候也只会在当前的组件生效
+
 .tips{
   font-size: 16px;
   text-align: right;
