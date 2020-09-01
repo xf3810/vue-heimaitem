@@ -1,7 +1,7 @@
 <template>
-  <div class="nav-item" @click='clickfn'>
+  <div class="nav-item" @click='clickfn' >
       <div class="title"><slot></slot></div>
-      <div class="content"><slot name='centent'></slot></div>
+      <div class="content"><slot name='content'></slot></div>
       <div class="iconfont iconjiantou1"></div>
   </div>
 </template>
@@ -10,8 +10,10 @@
 export default {
   methods: {
     clickfn () {
-      console.log(this.to)
-      this.$router.push('./' + this.to)
+      if (this.to) {
+        this.$router.push('./' + this.to)
+      }
+      this.$emit('click')
     }
   },
   props: {

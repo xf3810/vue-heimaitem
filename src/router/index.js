@@ -3,12 +3,14 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import User from '../views/User.vue'
+import Edit from '../views/Edit.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{ path: '/login', component: Login, name: 'login' },
   { path: '/register', component: Register, name: 'register' },
-  { path: '/user', component: User, name: 'user' }]
+  { path: '/user', component: User, name: 'user' },
+  { path: '/user-edit', component: Edit, name: 'user-edit' }]
 
 const router = new VueRouter({
   routes
@@ -25,7 +27,8 @@ router.beforeEach((to, from, next) => {
   // } else {
   //   next()
   // }
-  if (to.name !== 'user' || token) {
+  const paths = ['user', 'user-edit']
+  if (!paths.includes(to.name) || token) {
     next()
   } else {
     router.push('/login')

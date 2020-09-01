@@ -21,6 +21,7 @@ Vue.filter('time', input => {
 
 Vue.prototype.axios = axios
 axios.defaults.baseURL = 'http://localhost:3000'
+Vue.prototype.$base = 'http://localhost:3000'
 
 axios.interceptors.request.use(function (config) {
   const token = localStorage.getItem('token')
