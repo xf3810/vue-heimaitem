@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import '../style/base.css'
 import '../fonts/iconfont.css'
-import Vant from 'vant'
+import Vant, { Toast } from 'vant'
 import 'vant/lib/index.css'
 import 'amfe-flexible'
 import HmHeader from './components/HmHeader.vue'
@@ -22,6 +22,23 @@ Vue.filter('time', input => {
 Vue.prototype.axios = axios
 axios.defaults.baseURL = 'http://localhost:3000'
 
+axios.interceptors.request.use(function (config) {
+  const token = localStorage.getItem('token')
+  config.headers.Authorization = token
+  return config
+})
+
+axios.interceptors.response.use(function (response) {
+  // 对响应数据做点什么
+  const { statusCode, message } = response.data
+  if (statusCode === 401 && message === '用户信息验证失败') {
+    router.push('/login')
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+    Toast.fail('用户验证失败')
+  }
+  return response
+})
 Vue.use(Vant)
 Vue.config.productionTip = false
 

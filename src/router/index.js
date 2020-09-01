@@ -15,17 +15,24 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
-  console.log(from)
   const token = localStorage.getItem('token')
-  if (to.name === 'user') {
-    if (token) {
-      next()
-    } else {
-      this.$router.push('/login')
-    }
-  } else {
+  // if (to.name === 'user') {
+  //   if (token) {
+  //     next()
+  //   } else {
+  //     this.$router.push('/login')
+  //   }
+  // } else {
+  //   next()
+  // }
+  if (to.name !== 'user' || token) {
     next()
+  } else {
+    router.push('/login')
   }
 })
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 export default router
