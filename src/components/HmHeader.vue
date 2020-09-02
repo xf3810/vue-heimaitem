@@ -1,4 +1,6 @@
 <template>
+<div>
+  <div class="top"></div>
   <div class="hm-header">
       <div class="back" @click='back'>
           <span class="iconfont iconjiantou2"></span>
@@ -6,6 +8,7 @@
       <div class="title"> <slot></slot> </div>
       <div class="block"></div>
   </div>
+</div>
 </template>
 
 <script>
@@ -18,9 +21,18 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style lang='less' scoped>
+.top {
+  height: 50px;
+  width: 100%;
+}
 .hm-header{
+  background-color: #fff;
+    position: fixed;
+    z-index: 999;
+    top: 0;
     height: 50px;
+    width: 100%;
     line-height: 50px;
     text-align: center;
     display: flex;
@@ -36,5 +48,7 @@ export default {
         font-weight: 700;
 
     }
+
 }
+
 </style>

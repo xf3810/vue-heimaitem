@@ -17,12 +17,12 @@
       <template>我的关注</template>
       <template #content>关注的用户</template>
     </nav-item>
-    <nav-item>
+    <nav-item to='comment'>
       <template>我的跟帖</template>
       <template #content>跟帖/回复</template>
     </nav-item>
-    <nav-item>
-      <template>我的收藏</template>
+    <nav-item to='star'>
+      <template >我的收藏</template>
       <template #content>文章/视频</template>
     </nav-item>
     <nav-item to="user-edit">

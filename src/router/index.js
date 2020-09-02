@@ -4,13 +4,19 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import User from '../views/User.vue'
 import Edit from '../views/Edit.vue'
+import Follow from '../views/Follow.vue'
+import Comment from '../views/myComment.vue'
+import Star from '../views/myStar.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{ path: '/login', component: Login, name: 'login' },
   { path: '/register', component: Register, name: 'register' },
   { path: '/user', component: User, name: 'user' },
-  { path: '/user-edit', component: Edit, name: 'user-edit' }]
+  { path: '/user-edit', component: Edit, name: 'user-edit' },
+  { path: '/follow', component: Follow, name: 'follow' },
+  { path: '/comment', component: Comment, name: 'comment' },
+  { path: '/star', component: Star, name: 'star' }]
 
 const router = new VueRouter({
   routes
@@ -27,7 +33,7 @@ router.beforeEach((to, from, next) => {
   // } else {
   //   next()
   // }
-  const paths = ['user', 'user-edit']
+  const paths = ['user', 'user-edit', 'follow', 'comment', 'star']
   if (!paths.includes(to.name) || token) {
     next()
   } else {
