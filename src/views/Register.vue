@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style lang='less' scoped>
 .tips {
   font-size: 16px;
   text-align: right;
