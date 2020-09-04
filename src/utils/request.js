@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import Toast from 'vant'
+import { Toast } from 'vant'
 import router from '../router/index'
 Vue.prototype.axios = axios
 axios.defaults.baseURL = 'http://localhost:3000'
@@ -15,7 +15,9 @@ Vue.prototype.$url = function (url) {
 
 axios.interceptors.request.use(function (config) {
   const token = localStorage.getItem('token')
-  config.headers.Authorization = token
+  if (token) {
+    config.headers.Authorization = token
+  }
   return config
 })
 

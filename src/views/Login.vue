@@ -66,7 +66,7 @@ export default {
             localStorage.setItem('token', data.token)
             localStorage.setItem('userId', data.user.id)
             this.$toast.success(message)
-            this.$router.push('./user')
+            this.$router.push('./')
           }
         })
     }
