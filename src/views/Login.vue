@@ -28,7 +28,7 @@
 // import axios from 'axios'
 export default {
   created () {
-    // console.log(this.$route)
+    console.log(this.$route)
     const { username, password } = this.$route.params
     this.password = password
     this.username = username
@@ -66,6 +66,10 @@ export default {
             localStorage.setItem('token', data.token)
             localStorage.setItem('userId', data.user.id)
             this.$toast.success(message)
+            if (this.$route.query.back) {
+              this.$router.back()
+              return
+            }
             this.$router.push('./')
           }
         })

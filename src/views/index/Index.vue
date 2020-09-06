@@ -106,6 +106,7 @@ export default {
       this.loading = true
       await this.getNews(this.category[this.active].id)
     }
+
   },
   watch: {
     active (val) {

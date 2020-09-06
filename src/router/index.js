@@ -31,15 +31,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
-  // if (to.name === 'user') {
-  //   if (token) {
-  //     next()
-  //   } else {
-  //     this.$router.push('/login')
-  //   }
-  // } else {
-  //   next()
-  // }
   const paths = ['user', 'user-edit', 'follow', 'comment', 'star']
   if (!paths.includes(to.name) || token) {
     next()
