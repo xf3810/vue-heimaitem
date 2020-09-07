@@ -38,12 +38,16 @@
     <!-- 评论 -->
     <div class="comment-list">
       <h3>精彩评论</h3>
-      <hm-comment v-for='comment in commentList' :key='comment.id' :comment='comment'></hm-comment>
+      <hm-comment v-for="comment in commentList" :key="comment.id" :comment="comment"></hm-comment>
     </div>
     <!-- 底部 -->
     <div class="footer">
-      <div class="foot">
-        <div class="write">
+      <div class="foot1" v-if="isShowTextarea">
+        <textarea class="textarea" :placeholder="'回复：' + nickname" ref="textarea" v-model="content"></textarea>
+        <van-button type="primary" size="small" @click="publish">发送</van-button>
+      </div>
+      <div class="foot" v-else>
+        <div class="write" @click="showTextarea">
           <input type="text" placeholder="写跟帖" />
         </div>
         <span class="iconfont iconpinglun-">
@@ -63,18 +67,52 @@ export default {
       detail: {
         user: {}
       },
-      commentList: []
+      commentList: [],
+      isShowTextarea: false,
+      content: '',
+      parentId: '',
+      nickname: ''
     }
   },
   created () {
     const id = this.$route.params.id
     this.getArticle(id)
-
     this.getComment()
+    this.$bus.$on('reply', this.onReply)
+  },
+  destroyed () {
+    this.$bus.$off('reply', this.onReply)
   },
   methods: {
+    async onReply (id, nickname) {
+      this.nickname = '@' + nickname
+      this.isShowTextarea = true
+      await this.$nextTick()
+      this.$refs.textarea.focus()
+      this.parentId = id
+    },
+    async publish () {
+      const res = await this.axios.post(`/post_comment/${this.detail.id}`, {
+        content: this.content,
+        parent_id: this.parentId
+      })
+      const { statusCode, message } = res.data
+      if (statusCode === 200) {
+        this.$toast.success(message)
+        this.getComment()
+        this.content = ''
+        this.isShowTextarea = false
+      }
+    },
+    async showTextarea () {
+      this.isShowTextarea = true
+      await this.$nextTick()
+      this.$refs.textarea.focus()
+    },
     async getComment () {
-      const res = await this.axios.get(`/post_comment/${this.$route.params.id}`)
+      const res = await this.axios.get(
+        `/post_comment/${this.$route.params.id}`
+      )
       const { statusCode, data } = res.data
       if (statusCode === 200) {
         this.commentList = data
@@ -206,6 +244,7 @@ export default {
   }
   .content {
     padding: 20px;
+    font-size: 16px;
     .author {
       margin: 10px 0;
       span {
@@ -229,7 +268,7 @@ export default {
     display: flex;
     justify-content: space-around;
     border-bottom: 3px solid #ccc;
-    padding: 30px 0 ;
+    padding: 30px 0;
     .good,
     .share {
       width: 80px;
@@ -288,11 +327,30 @@ export default {
           right: -10px;
           font-size: 10px;
           background-color: #f00;
-
         }
       }
       .iconfont {
         font-size: 23px;
+      }
+    }
+    .foot1 {
+      background-color: #fff;
+      height: 120px;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding-bottom: 20px;
+      .textarea {
+        width: 260px;
+        height: 80px;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #ccc;
+        font-size: 14px;
       }
     }
   }

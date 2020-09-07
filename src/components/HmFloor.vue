@@ -1,14 +1,14 @@
 <template>
   <div class="hm-floor">
-    <comment :parent="parent.parent" v-if="parent.parent"></comment>
+    <comment :count='count-1' :parent="parent.parent" v-if="parent.parent"></comment>
     <div class="parent">
       <div class="more">
         <div class="more-l">
-          <span>1.</span>
+          <span>{{count}}.</span>
           <span>{{parent.user.nickname}}</span>
           <span class="time">{{parent.create_date | now}}</span>
         </div>
-        <div class="more-r">回复</div>
+        <div class="more-r" @click='reply'>回复</div>
       </div>
       <div class="more-content">{{parent.content}}</div>
     </div>
@@ -19,7 +19,18 @@
 export default {
   name: 'comment',
   props: {
-    parent: Object
+    parent: Object,
+    count: Number
+  },
+  methods: {
+    reply () {
+      this.$bus.$emit('reply', this.parent.id, this.parent.user.nickname)
+    }
+  },
+  watch: {
+    count (num) {
+      console.log(num)
+    }
   }
 }
 </script>

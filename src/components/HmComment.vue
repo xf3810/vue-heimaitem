@@ -10,7 +10,7 @@
       </div>
       <div class="right">回复</div>
     </div>
-    <hm-floor :parent='comment.parent' v-if='comment.parent'></hm-floor>
+    <hm-floor :count='getLength(0, comment)' :parent='comment.parent' v-if='comment.parent'></hm-floor>
     <div class="content">{{comment.content}}</div>
   </div>
 </template>
@@ -20,6 +20,15 @@ export default {
 
   props: {
     comment: Object
+  },
+  methods: {
+    getLength (num, obj) {
+      if (obj.parent) {
+        return this.getLength(num + 1, obj.parent)
+      } else {
+        return num
+      }
+    }
   }
 }
 </script>
@@ -27,6 +36,9 @@ export default {
 <style lang='less' scoped>
 .hm-comment {
   padding: 0 20px;
+  &:last-child {
+    margin-bottom: 70px;
+  }
   border-bottom: 1px solid #ccc;
   .reader {
     padding: 10px 0;
@@ -54,7 +66,7 @@ export default {
       }
     }
     .right {
-      font-size: 16px;
+      font-size: 14px;
       color: #666;
     }
   }
