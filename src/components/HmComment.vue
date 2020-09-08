@@ -8,7 +8,7 @@
         <p>{{comment.user.nickname}}</p>
         <span class="time">{{comment.create_date | now}}</span>
       </div>
-      <div class="right">回复</div>
+      <div class="right" @click='reply'>回复</div>
     </div>
     <hm-floor :count='getLength(0, comment)' :parent='comment.parent' v-if='comment.parent'></hm-floor>
     <div class="content">{{comment.content}}</div>
@@ -22,6 +22,9 @@ export default {
     comment: Object
   },
   methods: {
+    reply () {
+      this.$bus.$emit('reply', this.comment.id, this.comment.user.nickname)
+    },
     getLength (num, obj) {
       if (obj.parent) {
         return this.getLength(num + 1, obj.parent)

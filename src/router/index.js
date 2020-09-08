@@ -10,6 +10,7 @@ import Star from '../views/myStar.vue'
 import Index from '../views/index/Index.vue'
 import Manage from '../views/index/Manage.vue'
 import PostDetail from '../views/index/PostDetail.vue'
+import Search from '../views/index/Search.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,8 @@ const routes = [{ path: '/login', component: Login, name: 'login' },
   { path: '/star', component: Star, name: 'star' },
   { path: '/', component: Index, name: 'index' },
   { path: '/detail/:id', component: PostDetail, name: 'detail' },
-  { path: '/manage', component: Manage, name: 'manage' }
+  { path: '/manage', component: Manage, name: 'manage' },
+  { path: '/search', component: Search, name: 'search' }
 ]
 
 const router = new VueRouter({

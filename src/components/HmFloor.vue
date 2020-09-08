@@ -26,11 +26,6 @@ export default {
     reply () {
       this.$bus.$emit('reply', this.parent.id, this.parent.user.nickname)
     }
-  },
-  watch: {
-    count (num) {
-      console.log(num)
-    }
   }
 }
 </script>

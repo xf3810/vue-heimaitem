@@ -31,5 +31,9 @@ img,input,button{
     *zoom: 1;
 }
 
-
+.one-txt {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 

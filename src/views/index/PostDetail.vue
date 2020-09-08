@@ -43,7 +43,7 @@
     <!-- 底部 -->
     <div class="footer">
       <div class="foot1" v-if="isShowTextarea">
-        <textarea class="textarea" :placeholder="'回复：' + nickname" ref="textarea" v-model="content"></textarea>
+        <textarea class="textarea" :placeholder="'回复：' + nickname" ref="textarea" v-model="content" @blur="cancel" ></textarea>
         <van-button type="primary" size="small" @click="publish">发送</van-button>
       </div>
       <div class="foot" v-else>
@@ -84,6 +84,11 @@ export default {
     this.$bus.$off('reply', this.onReply)
   },
   methods: {
+    cancel () {
+      if (!this.content) {
+        this.isShowTextarea = false
+      }
+    },
     async onReply (id, nickname) {
       this.nickname = '@' + nickname
       this.isShowTextarea = true
